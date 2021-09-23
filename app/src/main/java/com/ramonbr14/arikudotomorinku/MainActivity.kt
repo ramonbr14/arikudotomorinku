@@ -19,27 +19,42 @@ class MainActivity : AppCompatActivity() {
         botao.setOnClickListener {
             val textoQualquer: Editable? = campoTexto.text
             campoTexto.setText("")
-            //textodaView.text = textoQualquer
-            //mensagem(textoQualquer.toString())
-            textodaView.text = traduzNomeJapones(textoQualquer.toString()).toString()
+            textodaView.text = traduzNomeJapones(textoQualquer.toString())
         }
     }
 
     //Funcao unica para o Toast
     private  fun mensagem(mensagem: String){
-
-        val toast: WidgetToast = android.widget.Toast.makeText(this,mensagem,
+            val toast: WidgetToast = android.widget.Toast.makeText(this,mensagem,
             android.widget.Toast.LENGTH_LONG)
-        toast.show()
+            toast.show()
     }
     private fun traduzNomeJapones(textotraduzir:String): String {
-        var textoa:String = textotraduzir
+        val textoa:String = textotraduzir.uppercase()
+        var nomeJapones = ""
+        val alfabeto: List<Char> = listOf('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z')
         val listaJapones: List<String> = listOf("KA", "TU", "MI", "TE", "KU","LU", "JI", "RI", "KI", "ZU", "ME", "TA", "RIN", "TO", "MO", "NO", "KE", "SHI", "ARI", "CHI", "DO", "RU", "NA", "MEI", "FU", "RA")
-        //começar a ontar a string de saida co o nome em japones
 
-        mensagem(listaJapones.size.toString())
-        return listaJapones.size.toString()
+        var i = 0
+        do{
+            var p = 0
+            do{
+                if(textoa[i].isLetter()) {
+                    if((textoa[i].toString()) == alfabeto[p].toString()) {
+                        nomeJapones += listaJapones[p]
+                        p = alfabeto.size - 1
+                    }else{
+                        p++
+                    }
+                }else{
+                    nomeJapones += textoa[i]
+                    p = alfabeto.size - 1
+                }
+            }while(p!=(alfabeto.size-1))
+        i++
+        }while(i<=(textoa.length-1))
+        mensagem("TRADUÇÃO CONCLUIDA")
+        return nomeJapones
     }
 }
-
 
